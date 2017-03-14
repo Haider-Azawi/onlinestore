@@ -1,37 +1,37 @@
 /* eslint-disable no-unused-vars */
 
-/* <div class="container">
-      <div class="row">
-        <div class="col-xs-6">
-        </div>
-        <div class="col-xs-6">
-        </div>
-      </div>
-    </div>
-*/
 var items = [
   {
-    name: 'Toy',
-    description: 'Lego toy for kids'
+    itemName: 'Toy',
+    itemDescription: 'Lego toy for kids',
+    link: 'https://cdn.pixabay.com/photo/2016/07/19/23/38/superman-1529274__340.jpg'
   },
   {
-    name: 'Bike',
-    description: '26" Mens Bike'
+    itemName: 'Bike',
+    itemDescription: '26" Mens Bike',
+    link: 'http://cdn2.ternbicycles.com/sites/default/files/images/bikes/unfolded/2016/11/linka7-g1-unfold-m0-dkblue.jpg'
   }
 ]
 
 items.forEach(function(item) {
   var $container = document.createElement('div')
   var $row = document.createElement('div')
-  $row.textContent = item.name
   var $col = document.createElement('div')
-  $col.textContent = item.description
+  var $img = document.createElement('img')
+  var $name = document.createElement('h4')
+  var $description = document.createElement('p')
+  $name.textContent = item.itemName
+  $description.textContent = item.itemDescription
+  $img.setAttribute('src', item.link)
   document.body.appendChild($container)
   $container.appendChild($row)
   $row.appendChild($col)
+  $col.appendChild($img)
+  $col.appendChild($name)
+  $col.appendChild($description)
   $container.classList.add('container')
   $row.classList.add('row')
   $col.classList.add('col-xs-6')
   $col.classList.add('col')
-  return items
+  $img.classList.add('img')
 })
