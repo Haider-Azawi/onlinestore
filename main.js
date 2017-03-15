@@ -22,15 +22,10 @@ var items = [
     link: 'http://cdn2.ternbicycles.com/sites/default/files/images/bikes/unfolded/2016/11/linka7-g1-unfold-m0-dkblue.jpg'
   }
 ]
-var $container = document.createElement('div')
-var $row = document.createElement('div')
-document.body.appendChild($container)
-$container.appendChild($row)
-$container.classList.add('container-fluid')
-$row.classList.add('row')
 
 items.forEach(function (item) {
-  renderItem(item)
+  var $row = document.querySelector('.row')
+  $row.appendChild(renderItem(item))
 })
 
 function renderItem(item) {
@@ -46,7 +41,6 @@ function renderItem(item) {
   $img.setAttribute('src', item.link)
   $img.setAttribute('width', 350)
   $img.setAttribute('height', 200)
-  $row.appendChild($col)
   $col.appendChild($img)
   $col.appendChild($name)
   $col.appendChild($description)
@@ -54,4 +48,5 @@ function renderItem(item) {
   $col.classList.add('col-xs-4')
   $col.classList.add('col')
   $img.classList.add('img')
+  return ($col)
 }
