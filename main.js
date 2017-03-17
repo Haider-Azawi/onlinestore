@@ -28,7 +28,7 @@ var items = [
 ]
 
 items.forEach(function (item) {
-  var $row = document.querySelector('.row')
+  var $row = document.querySelector('#list')
   $row.appendChild(renderItem(item))
 })
 
@@ -52,53 +52,58 @@ function renderItem(item) {
   $col.classList.add('col-xs-4')
   $col.classList.add('col')
   $img.classList.add('img')
-  $col.setAttribute('data-id', item.id)
   $col.setAttribute('id', item.id)
   $button.classList.add('button')
   return ($col)
 }
 
-var BUTTONS = document.querySelectorAll('button')
-BUTTONS.forEach(function(button) {
-  button.addEventListener('click', function(event) {
-    var $row = document.querySelector('.row')
+var $list = document.querySelector('#list')
+$list.addEventListener('click', function(event) {
+  if (event.target.getAttribute('data-id')) {
+    var $row = document.querySelector('#list')
     $row.classList.add('hidden')
-    var target = event.target
-    var targetId = target.dataset.id
-    console.log(targetId)
-    for (var i = 0; i < items.length; i++) {
-     if (targetId === i + 1) {
-       var $newCol = document.createElement('div')
-       var $newImg = document.createElement('img')
-       var $newName = document.createElement('h4')
-       var $newDescription = document.createElement('p')
-       var $newButton1 = document.createElement('button')
-       var $newButton2 = document.createElement('button')
-       $newButton1.textContent = 'Add to cart'
-       $newButton2.textContent = 'Continue shopping'
-       $newButton1.setAttribute('data-id', items.id)
-       $newButton2.setAttribute('data-id', items.id)
-       $newName.textContent = items.itemName
-       $newDescription.textContent = items.itemDescription
-       $newImg.setAttribute('src', items.link)
-       $newImg.setAttribute('width', 350)
-       $newImg.setAttribute('height', 200)
-       $newCol.appendChild($newImg)
-       $newCol.appendChild($newName)
-       $newCol.appendChild($newDescription)
-       $newDescription.appendChild($newButton1)
-       $newDescription.appendChild($newButton2)
-       $newCol.classList.add('newCol')
-       $newImg.classList.add('newImg')
-       $newCol.setAttribute('data-id', items.id)
-       $newCol.setAttribute('id', items.id)
-       $newButton1.classList.add('newButton')
-       $newButton2.classList.add('newButton')
-       var $newrow = document.querySelector('.newrow')
-       $newrow.appendChild($newCol)
-     }
+    var targetId = event.target.dataset.id
+    var item = findItem(items, targetId)
 
-     }
+    var $detailsItem = detailedItem(item)
+    var $details = document.querySelector('#details')
+    $details.appendChild($detailsItem)
+  }
+})
 
-   })
- })
+function detailedItem(item) {
+  var $newCol = document.createElement('div')
+  var $newImg = document.createElement('img')
+  var $newName = document.createElement('h4')
+  var $newDescription = document.createElement('p')
+  var $newButton1 = document.createElement('button')
+  var $newButton2 = document.createElement('button')
+  $newButton1.textContent = 'Add to cart'
+  $newButton2.textContent = 'Continue shopping'
+  $newButton1.setAttribute('data-id', item.id)
+  $newButton2.setAttribute('data-id', item.id)
+  $newName.textContent = item.itemName
+  $newDescription.textContent = item.itemDescription
+  $newImg.setAttribute('src', item.link)
+  $newImg.setAttribute('width', 350)
+  $newImg.setAttribute('height', 200)
+  $newCol.appendChild($newImg)
+  $newCol.appendChild($newName)
+  $newCol.appendChild($newDescription)
+  $newDescription.appendChild($newButton1)
+  $newDescription.appendChild($newButton2)
+  $newCol.classList.add('newCol')
+  $newImg.classList.add('newImg')
+  $newCol.setAttribute('id', item.id)
+  $newButton1.classList.add('newButton')
+  $newButton2.classList.add('newButton')
+  return $newCol
+}
+
+function findItem(items, id) {
+  for (var i = 0; i < items.length; i++) {
+    if (id === items[i].id.toString()) {
+      return items[i]
+    }
+  }
+}
