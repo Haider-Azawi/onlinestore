@@ -53,6 +53,7 @@ function renderItem(item) {
   $col.classList.add('col')
   $img.classList.add('img')
   $col.setAttribute('data-id', item.id)
+  $col.setAttribute('id', item.id)
   $button.classList.add('button')
   return ($col)
 }
@@ -60,16 +61,44 @@ function renderItem(item) {
 var BUTTONS = document.querySelectorAll('button')
 BUTTONS.forEach(function(button) {
   button.addEventListener('click', function(event) {
+    var $row = document.querySelector('.row')
+    $row.classList.add('hidden')
     var target = event.target
-    var value = target.dataset.id
-    console.log(value)
-  })
+    var targetId = target.dataset.id
+    console.log(targetId)
+    for (var i = 0; i < items.length; i++) {
+     if (targetId === i + 1) {
+       var $newCol = document.createElement('div')
+       var $newImg = document.createElement('img')
+       var $newName = document.createElement('h4')
+       var $newDescription = document.createElement('p')
+       var $newButton1 = document.createElement('button')
+       var $newButton2 = document.createElement('button')
+       $newButton1.textContent = 'Add to cart'
+       $newButton2.textContent = 'Continue shopping'
+       $newButton1.setAttribute('data-id', items.id)
+       $newButton2.setAttribute('data-id', items.id)
+       $newName.textContent = items.itemName
+       $newDescription.textContent = items.itemDescription
+       $newImg.setAttribute('src', items.link)
+       $newImg.setAttribute('width', 350)
+       $newImg.setAttribute('height', 200)
+       $newCol.appendChild($newImg)
+       $newCol.appendChild($newName)
+       $newCol.appendChild($newDescription)
+       $newDescription.appendChild($newButton1)
+       $newDescription.appendChild($newButton2)
+       $newCol.classList.add('newCol')
+       $newImg.classList.add('newImg')
+       $newCol.setAttribute('data-id', items.id)
+       $newCol.setAttribute('id', items.id)
+       $newButton1.classList.add('newButton')
+       $newButton2.classList.add('newButton')
+       var $newrow = document.querySelector('.newrow')
+       $newrow.appendChild($newCol)
+     }
 
-})
+     }
 
-/* Next suggested step:
-
-1- Currently the clicked button "View Details" returns the item number to be selected from the second DOM list
-2- Create a new DOM list consists of div rows for each div colomn to hold a single item element
-3- The new single item elemts should include 2 buttons, one for "Add to cart" and another to go back to the main View
- */
+   })
+ })
